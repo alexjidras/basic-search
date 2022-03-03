@@ -5,18 +5,18 @@ import { history } from 'libs';
 import { Properties } from 'types';
 
 export const useQueryUpdate = (): Properties => {
-    const { push, location } = history;
+    const { location } = history;
   
     const updateQuery = useCallback(
-      (filters) =>
-        push(
+      (filters, replace = false) =>
+        (replace ? history.replace : history.push)(
           `${location.pathname}?${queryString.stringify(filters, {
             skipEmptyString: true,
             skipNull: true,
             arrayFormat: 'comma',
           })}`,
         ),
-      [push, location.pathname],
+      [location.pathname],
     );
   
     return {
